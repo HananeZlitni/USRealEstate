@@ -37,13 +37,13 @@
                 android:layout_marginTop="50dp"
                 android:text="Search Property"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintBottom_toTopOf="@+id/editText5"
+                app:layout_constraintBottom_toTopOf="@+id/addressField"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/addressField"
                 android:layout_width="330dp"
                 android:layout_height="44dp"
                 android:layout_marginBottom="47dp"
@@ -51,14 +51,15 @@
                 android:layout_marginStart="16dp"
                 android:ems="10"
                 android:hint="Street Address"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/editText6"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                app:layout_constraintBottom_toTopOf="@+id/cityField"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints" />
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/cityField"
                 android:layout_width="118dp"
                 android:layout_height="45dp"
                 android:layout_marginBottom="39dp"
@@ -67,12 +68,13 @@
                 android:ems="10"
                 android:hint="City"
                 android:inputType="text"
-                app:layout_constraintBottom_toTopOf="@+id/button3"
-                app:layout_constraintEnd_toStartOf="@+id/us_states"
+                android:imeOptions="actionDone"
+                app:layout_constraintBottom_toTopOf="@+id/clear"
+                app:layout_constraintEnd_toStartOf="@+id/stateField"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/clear"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +85,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/search"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,17 +95,16 @@
                 android:text="Search"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/button3" />
+                app:layout_constraintStart_toEndOf="@+id/clear" />
 
             <Spinner
-                android:id="@+id/us_states"
+                android:id="@+id/stateField"
                 android:layout_width="119dp"
                 android:layout_height="43dp"
                 android:layout_marginBottom="41dp"
                 android:layout_marginEnd="40dp"
-                app:layout_constraintBottom_toTopOf="@+id/button4"
+                app:layout_constraintBottom_toTopOf="@+id/search"
                 app:layout_constraintEnd_toEndOf="parent" />
-
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
