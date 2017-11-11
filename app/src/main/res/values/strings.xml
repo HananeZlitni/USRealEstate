@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">US Real Estate</string>
     <string name="action_settings">Settings</string>
+    <string-array name="states_array">
+        <item>CA</item>
+        <item>NY</item>
+        <item>FL</item>
+    </string-array>
 </resources>
