@@ -17,6 +17,8 @@ import android.graphics.Color;
 import android.widget.AdapterView;
 import android.widget.Toast;
 import java.util.*;
+import android.content.Intent;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -137,4 +139,12 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void goToActivity2(View view) {
+        Intent intent = new Intent(this, Main2Activity.class);
+
+        startActivity(intent);
+    }
+
+
 }
