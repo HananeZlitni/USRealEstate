@@ -126,6 +126,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*Button searchBtn = (Button)findViewById(R.id.search);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HTTPRequestClass httpRequest = new HTTPRequestClass();
+                httpRequest.execute();
+                Intent intent = new Intent(MainActivity.this, Main3Activity.class);
+
+                startActivity(intent);
+            }
+        });*/
     }
 
     @Override
@@ -153,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
     public void goToActivity2(View view) {
         HTTPRequestClass httpRequest = new HTTPRequestClass();
         httpRequest.execute();
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(MainActivity.this, Main3Activity.class);
 
         startActivity(intent);
     }

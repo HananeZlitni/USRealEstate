@@ -27,8 +27,6 @@ public class Main3Activity extends AppCompatActivity {
     private Toolbar toolbar;
     private AppCompatActivity myact;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -53,12 +51,7 @@ public class Main3Activity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
-
     }
-
-
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
