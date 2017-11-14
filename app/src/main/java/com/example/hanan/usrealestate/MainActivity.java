@@ -32,6 +32,9 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
+    TextView addressField = (TextView)findViewById(R.id.addressField);
+    TextView cityField =(TextView)findViewById(R.id.cityField);
+    Spinner stateField =(Spinner) findViewById(R.id.stateField);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +123,9 @@ public class MainActivity extends AppCompatActivity {
         clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TextView)findViewById(R.id.addressField)).setText("");
-                ((TextView)findViewById(R.id.cityField)).setText("");
-                ((Spinner)findViewById(R.id.stateField)).setSelection(0);
+                addressField.setText("");
+                cityField.setText("");
+                stateField.setSelection(0);
             }
         });
 
@@ -162,14 +165,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToActivity2(View view) {
+        String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
         HTTPRequestClass httpRequest = new HTTPRequestClass();
-        httpRequest.execute();
+        httpRequest.execute(arr);
         Intent intent = new Intent(MainActivity.this, Main3Activity.class);
-
         startActivity(intent);
     }
-
-
-
-
 }
