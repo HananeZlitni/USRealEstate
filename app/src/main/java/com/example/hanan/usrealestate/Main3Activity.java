@@ -36,10 +36,15 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         Log.d(TAG, "onCreate: Starting. ");
 
+        //ActionBar actionBar = getActionBar();
+        //actionBar.setDisplayShowTitleEnabled(false);
 
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //myact.setSupportActionBar(toolbar);
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //setToolbar();
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 

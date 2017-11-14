@@ -1,5 +1,6 @@
 package com.example.hanan.usrealestate;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,10 +19,15 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import java.io.BufferedReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 import android.content.Intent;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -145,9 +151,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToActivity2(View view) {
-       // HTTPRequestClass httpRequest = new HTTPRequestClass();
-       // httpRequest.execute();
-        Intent intent = new Intent(this, Main3Activity.class);
+        HTTPRequestClass httpRequest = new HTTPRequestClass();
+        httpRequest.execute();
+        Intent intent = new Intent(this, Main2Activity.class);
 
         startActivity(intent);
     }
+
+
+
+
+}
