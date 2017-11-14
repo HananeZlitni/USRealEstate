@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToActivity2(View view) {
         String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
+
         HTTPRequestClass httpRequest = new HTTPRequestClass();
         httpRequest.execute(arr);
         Intent intent = new Intent(MainActivity.this, Main3Activity.class);

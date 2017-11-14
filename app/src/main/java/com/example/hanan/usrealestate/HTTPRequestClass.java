@@ -25,7 +25,10 @@ public class HTTPRequestClass extends AsyncTask<String, Void, String> {
             cityInput = params[1];
             stateInput = params[2];
 
-            URL url = new URL("http://www.zillow.com/webservice/GetDeepSearchResults.htm");//zws-id=X1-ZWz1g43lmml3wr_2hwdv
+            addressInput = addressInput.replaceAll(" ","+");
+            cityInput = cityInput.replaceAll(" ","+");
+
+            URL url = new URL("http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=X1-ZWz1g43lmml3wr_2hwdv&address="+addressInput+"&citystatezip="+cityInput+"+"+stateInput);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             // read result
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
