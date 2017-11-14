@@ -20,6 +20,11 @@ public class HTTPRequestClass extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground (String... params){
         try{
+            String addressInput, cityInput, stateInput;
+            addressInput = params[0];
+            cityInput = params[1];
+            stateInput = params[2];
+
             URL url = new URL("http://www.zillow.com/webservice/GetDeepSearchResults.htm");//zws-id=X1-ZWz1g43lmml3wr_2hwdv
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             // read result
