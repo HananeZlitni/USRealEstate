@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToActivity2(View view) {
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(this, Main3Activity.class);
 
         startActivity(intent);
     }

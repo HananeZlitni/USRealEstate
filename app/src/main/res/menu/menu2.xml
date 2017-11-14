@@ -8,7 +8,7 @@
         android:title="Item"
         app:showAsAction="always" />
     <item
-        android:id="@+id/favorite_2"
+        android:id="@+id/favorite_1"
         android:icon="@android:drawable/btn_star_big_off"
         android:title="Item"
         app:showAsAction="always" />
