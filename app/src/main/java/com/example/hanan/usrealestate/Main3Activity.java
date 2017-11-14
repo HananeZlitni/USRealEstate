@@ -1,6 +1,7 @@
 package com.example.hanan.usrealestate;
 
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.*;
@@ -18,6 +19,7 @@ import android.view.View;
 
 
 import static android.R.drawable.btn_star_big_on;
+import static android.R.drawable.star_big_off;
 
 public class Main3Activity extends AppCompatActivity {
 
@@ -26,6 +28,7 @@ public class Main3Activity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private AppCompatActivity myact;
+    public static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,12 @@ public class Main3Activity extends AppCompatActivity {
 
         //ActionBar actionBar = getActionBar();
         //actionBar.setDisplayShowTitleEnabled(false);
-
+        final Drawable upArrow = getResources().getDrawable(android.R.drawable.ic_menu_revert);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //myact.setSupportActionBar(toolbar);
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Property Details");
         //setToolbar();
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
