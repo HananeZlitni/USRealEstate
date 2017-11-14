@@ -2,11 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hanan.usrealestate">
 
-
-
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="23" />
+    <user-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -29,10 +25,6 @@
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Main3Activity"
-            android:label="@string/title_activity_main3"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
