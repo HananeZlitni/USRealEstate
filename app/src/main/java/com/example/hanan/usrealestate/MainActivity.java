@@ -1,5 +1,5 @@
 package com.example.hanan.usrealestate;
-
+import com.example.hanan.usrealestate.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.graphics.Color;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
 
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
@@ -148,9 +149,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToActivity2(View view) {
-        HTTPRequestClass httpRequest = new HTTPRequestClass();
-        httpRequest.execute();
-        Intent intent = new Intent(this, Main2Activity.class);
+       // HTTPRequestClass httpRequest = new HTTPRequestClass();
+       // httpRequest.execute();
+        Intent intent = new Intent(this, Main3Activity.class);
 
         startActivity(intent);
     }
@@ -164,12 +165,12 @@ public class MainActivity extends AppCompatActivity {
  * Created by waad on 12/11/2017.
  */
 
-public class HTTPRequestClass extends AsyncTask<Void, Void, Void> {
+/*public class HTTPRequestClass extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected String doInBackground (Void... params){
         try{
-            URL url = new URL("http://www.zillow.com/webservice/GetDeepSearchResults.htm")//zws-id=X1-ZWz1g43lmml3wr_2hwdv
+            URL url = new URL("http://www.zillow.com/webservice/GetDeepSearchResults.htm");//zws-id=X1-ZWz1g43lmml3wr_2hwdv
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             // read result
             BufferedReader br = new BufferedReader();
@@ -193,7 +194,7 @@ public class HTTPRequestClass extends AsyncTask<Void, Void, Void> {
         if (result!=null) {
 
             try {
-                JSONArray jsonArray = new JSONArray(result)
+                JSONArray jsonArray = new JSONArray(result);
                 String symbol, name, desc;
                 for (int i=0; i < jsonArray.length(); i++){
                     JSONObject jsonObj = jsonArray.getJSONObject(i);
@@ -204,4 +205,4 @@ public class HTTPRequestClass extends AsyncTask<Void, Void, Void> {
     }
 
 
-}
+} */
