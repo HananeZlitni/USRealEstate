@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         TextView cityField =(TextView)findViewById(R.id.cityField);
         Spinner stateField =(Spinner) findViewById(R.id.stateField);
         String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
+
         HTTPRequestClass httpRequest = new HTTPRequestClass();
         httpRequest.execute(arr);
         Intent intent = new Intent(MainActivity.this, Main3Activity.class);
