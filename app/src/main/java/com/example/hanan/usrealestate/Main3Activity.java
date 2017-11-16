@@ -1,11 +1,20 @@
 package com.example.hanan.usrealestate;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.*;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 
 
 
@@ -15,7 +24,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.content.SharedPreferences;
+import android.widget.TextView;
 
 
 import static android.R.drawable.btn_star_big_on;
@@ -28,7 +38,10 @@ public class Main3Activity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private AppCompatActivity myact;
+    private String ID="norah";
     public static final String PREFS_NAME = "MyPrefsFile";
+
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +50,11 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         Log.d(TAG, "onCreate: Starting. ");
 
-        //ActionBar actionBar = getActionBar();
-        //actionBar.setDisplayShowTitleEnabled(false);
-        final Drawable upArrow = getResources().getDrawable(android.R.drawable.ic_menu_revert);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //myact.setSupportActionBar(toolbar);
+
+
+
+        //final Drawable upArrow = getResources().getDrawable(android.R.drawable.ic_menu_revert);
+
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Property Details");
@@ -68,8 +81,12 @@ public class Main3Activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main3, menu);
-       // MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu_main3, menu);
+
+        sharedpreferences = getSharedPreferences(PREFS_NAME,
+                Context.MODE_PRIVATE);
+        if (sharedpreferences.contains(ID)) {
+            menu.findItem(R.id.favorite_2).setIcon(android.R.drawable.btn_star_big_on);
+        }
 
         return true;
     }
@@ -83,7 +100,21 @@ public class Main3Activity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.favorite_2) {
-             item.setIcon(android.R.drawable.btn_star_big_on);
+            if (item.getIcon().getConstantState().equals(
+                    getResources().getDrawable(android.R.drawable.btn_star_big_on).getConstantState()
+            )){
+                item.setIcon(android.R.drawable.btn_star_big_off);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.remove(ID);
+                editor.apply();
+            }else {
+                item.setIcon(android.R.drawable.btn_star_big_on);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putBoolean(ID, true);
+                editor.apply();
+
+
+            }
             return true;
         }
 
@@ -91,6 +122,20 @@ public class Main3Activity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+
+
+
+
+
+    public void openURLinBrowser(View view){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.viralandroid.com"));
+        startActivity(browserIntent);
     }
 
     /*private void setToolbar() {
