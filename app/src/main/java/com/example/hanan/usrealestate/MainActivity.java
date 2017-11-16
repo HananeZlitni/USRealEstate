@@ -1,14 +1,13 @@
 package com.example.hanan.usrealestate;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -26,7 +25,8 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Context;
+import android.text.style.*;
+
 
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
@@ -45,9 +45,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static android.graphics.Color.RED;
+
 
 public class MainActivity extends AppCompatActivity {
-
+    final String[] usStates = new String[] {
+            "State                      *", "CA","NY","AL","AK","AZ","AR","CO","CT","DE","FL",
+            "GA","HI","ID","IL","IN","IA","KS","KY","LA","ME",
+            "MD","MA","MI","MN","MS","MO","MT","NE","NV","NH",
+            "NJ","NM","NC","ND","OH","OK","OR","PA","RI","SC",
+            "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,42 +63,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         //********** SET TEXT FIELDS ************
         setTextFields();
 
         //********** SPINNER ************
         final Spinner spinner = (Spinner) findViewById(R.id.stateField);
 
-        String[] usStates = new String[] {
-        "State","CA","NY","AL","AK","AZ","AR","CO","CT","DE","FL",
-                "GA","HI","ID","IL","IN","IA","KS","KY","LA","ME",
-                "MD","MA","MI","MN","MS","MO","MT","NE","NV","NH",
-                "NJ","NM","NC","ND","OH","OK","OR","PA","RI","SC",
-                "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
-        };
-
-        final List<String> usStatesList = new ArrayList<>(Arrays.asList(usStates));
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, usStatesList) {
+        final List<String> stateArr = new ArrayList<>(Arrays.asList(usStates));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,stateArr){
 
             @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
                     // Disable the first item from Spinner
-                    // First item will be used for hint
+                    // First item will be use for hint
                     return false;
-                } else {
+                }
+                else
+                {
                     return true;
                 }
             }
@@ -101,30 +93,18 @@ public class MainActivity extends AppCompatActivity {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if(position == 0){
-                    /*SpannableStringBuilder builder3 = new SpannableStringBuilder();
-                    builder3.append(hint3);
-                    int start3 = builder3.length();
-                    builder3.append(asterisk);
-                    int end3 = builder3.length();
-                    builder3.setSpan(new ForegroundColorSpan(Color.RED), start3, end3,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                    state.setHint(builder3);*/  
                     // Set the hint text color gray
-                    tv.setTextColor(Color.rgb(156,156,156));
+                    tv.setTextColor(Color.GRAY);
                 }
                 else {
                     tv.setTextColor(Color.BLACK);
                 }
-
                 return view;
             }
         };
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -142,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -152,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TextView addressField = (TextView)findViewById(R.id.addressField);
                 TextView cityField =(TextView)findViewById(R.id.cityField);
-                Spinner stateField =(Spinner) findViewById(R.id.stateField);
+                Spinner stateField = (Spinner)findViewById(R.id.stateField);
                 addressField.setText("");
                 cityField.setText("");
                 stateField.setSelection(0);
@@ -233,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
     public void setTextFields() {
         TextView addr = (TextView)findViewById(R.id.addressField);
         TextView city = (TextView)findViewById(R.id.cityField);
-        Spinner state = (Spinner) findViewById(R.id.stateField);
+        Spinner state = (Spinner)findViewById(R.id.stateField);
 
         //****** HINT 1*****
         String hint1 = "Street Address                            ";
@@ -243,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         int start = builder1.length();
         builder1.append(asterisk);
         int end = builder1.length();
-        builder1.setSpan(new ForegroundColorSpan(Color.RED), start, end,
+        builder1.setSpan(new ForegroundColorSpan(RED), start, end,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         addr.setHint(builder1);
@@ -255,33 +236,41 @@ public class MainActivity extends AppCompatActivity {
         int start2 = builder2.length();
         builder2.append(asterisk);
         int end2 = builder2.length();
-        builder2.setSpan(new ForegroundColorSpan(Color.RED), start2, end2,
+        builder2.setSpan(new ForegroundColorSpan(RED), start2, end2,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         city.setHint(builder2);
-
-        /*//****** HINT 3*****
-        String hint3 = "State  ";
-        SpannableStringBuilder builder3 = new SpannableStringBuilder();
-        builder3.append(hint3);
-        int start3 = builder3.length();
-        builder3.append(asterisk);
-        int end3 = builder3.length();
-        builder3.setSpan(new ForegroundColorSpan(Color.RED), start3, end3,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        state.setHint(builder3);*/
     }
 
     public void goToActivity2(View view) {
         TextView addressField = (TextView)findViewById(R.id.addressField);
-        TextView cityField =(TextView)findViewById(R.id.cityField);
-        Spinner stateField =(Spinner) findViewById(R.id.stateField);
-        String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
+        TextView cityField = (TextView)findViewById(R.id.cityField);
+        Spinner stateField = (Spinner)findViewById(R.id.stateField);
 
-        HTTPRequestClass httpRequest = new HTTPRequestClass();
-        httpRequest.execute(arr);
-        Intent intent = new Intent(MainActivity.this, Main3Activity.class);
-        startActivity(intent);
+        if (addressField.getText().toString().matches("") || cityField.getText().toString().matches("") || stateField.getSelectedItemPosition()==0) {
+            alert("Please Fill All Fields");
+        }
+
+        else {
+            String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
+
+            HTTPRequestClass httpRequest = new HTTPRequestClass();
+            httpRequest.execute(arr);
+            Intent intent = new Intent(MainActivity.this, Main3Activity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void alert (String msg) {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        alertDialog.show();
     }
 }
