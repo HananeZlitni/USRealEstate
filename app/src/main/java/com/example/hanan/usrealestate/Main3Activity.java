@@ -1,6 +1,8 @@
 package com.example.hanan.usrealestate;
 
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.*;
@@ -16,6 +18,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static android.R.drawable.btn_star_big_on;
 
@@ -26,6 +36,11 @@ public class Main3Activity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private AppCompatActivity myact;
+
+
+
+    public static String MyChart;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +57,15 @@ public class Main3Activity extends AppCompatActivity {
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         //String text = getIntent().getStringExtra ("MyData");
+        String myZPID = getIntent().getStringExtra ("MyID");
+       // HTTPRequestClass2 httpRequest2 = new HTTPRequestClass2();
+       // httpRequest2.execute(myZPID);
+
+
+
+
+
         //setToolbar();
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -51,6 +75,16 @@ public class Main3Activity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+    }
+    public String resultMethod (){
+        String text = getIntent().getStringExtra ("MyData");
+        return text;
+    }
+
+    public String resultID (){
+        String id = getIntent().getStringExtra ("MyID");
+        return id;
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

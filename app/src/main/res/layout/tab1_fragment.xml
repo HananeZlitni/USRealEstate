@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
 
-        android:text="Tab1"
+
         android:textSize="25sp" />
 
 
