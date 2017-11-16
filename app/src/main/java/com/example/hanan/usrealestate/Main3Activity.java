@@ -57,10 +57,9 @@ public class Main3Activity extends AppCompatActivity {
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-         //String text = getIntent().getStringExtra ("MyData");
-        String myZPID = getIntent().getStringExtra ("MyID");
-       // HTTPRequestClass2 httpRequest2 = new HTTPRequestClass2();
-       // httpRequest2.execute(myZPID);
+
+        //String myZPID = getIntent().getStringExtra ("ZPID");
+
 
 
 
@@ -76,13 +75,30 @@ public class Main3Activity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
-    public String resultMethod (){
-        String text = getIntent().getStringExtra ("MyData");
+    public String Pstreet (){
+        String text = getIntent().getStringExtra ("MyStreet");
+        return text;
+    }
+    public String Pcity (){
+        String text = getIntent().getStringExtra ("MyCity");
+        return text;
+    }
+
+    public String Pstate (){
+        String text = getIntent().getStringExtra ("MyState");
+        return text;
+    }
+    public String Pzipcode (){
+        String text = getIntent().getStringExtra ("Myzipcode");
+        return text;
+    }
+    public String Pprice (){
+        String text = getIntent().getStringExtra ("MyPrice");
         return text;
     }
 
     public String resultID (){
-        String id = getIntent().getStringExtra ("MyID");
+        String id = getIntent().getStringExtra ("ZPID");
         return id;
 
     }

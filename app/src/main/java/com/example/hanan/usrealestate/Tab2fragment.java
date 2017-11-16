@@ -37,14 +37,13 @@ public class Tab2fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab2_fragment,container,false);
         t2 = view.findViewById(R.id.textTab2);
-       // String id = Main3Activity.MyChart;
+
+        // use this id in second HTTP request
         String cId = ((Main3Activity) getActivity()).resultID();
+
         HTTPRequestClass2 httpRequest2 = new HTTPRequestClass2();
          httpRequest2.execute(cId);
-        Log.d("myyyyyyyyy id from Act",cId);
-        //t2.setText(cId);
-       // String ChartId = ((Main3Activity) getActivity()).resultID();
-       // t2.setText(ChartId);
+
 
 
         return view ;

@@ -30,12 +30,10 @@ public class Tab1fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.tab1_fragment,container,false);
         t = view.findViewById(R.id.textTab1);
-        String detailsText = ((Main3Activity) getActivity()).resultMethod();
+
+        ///////// ##### ///////
+        String detailsText = ((Main3Activity) getActivity()).Pstreet();
         t.setText(detailsText);
-
-
-
-
         return view ;
     }
 
