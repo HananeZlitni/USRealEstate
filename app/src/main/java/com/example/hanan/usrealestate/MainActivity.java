@@ -1,24 +1,18 @@
 package com.example.hanan.usrealestate;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.view.ViewGroup;
 import android.graphics.Color;
@@ -26,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Context;
 
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
@@ -38,16 +31,48 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
+import android.util.Log;
+import android.util.Xml;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.annotation.SuppressLint;
 
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 
+import android.widget.TableLayout;
+import android.widget.TableRow;
+
+import static android.graphics.Color.RED;
+
+ import android.content.Context;
 public class MainActivity extends AppCompatActivity {
 
+    final String[] usStates = new String[] {
+            "State                      *", "CA","NY","AL","AK","AZ","AR","CO","CT","DE","FL",
+            "GA","HI","ID","IL","IN","IA","KS","KY","LA","ME",
+            "MD","MA","MI","MN","MS","MO","MT","NE","NV","NH",
+            "NJ","NM","NC","ND","OH","OK","OR","PA","RI","SC",
+            "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,42 +80,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         //********** SET TEXT FIELDS ************
         setTextFields();
 
         //********** SPINNER ************
         final Spinner spinner = (Spinner) findViewById(R.id.stateField);
 
-        String[] usStates = new String[] {
-        "State","CA","NY","AL","AK","AZ","AR","CO","CT","DE","FL",
-                "GA","HI","ID","IL","IN","IA","KS","KY","LA","ME",
-                "MD","MA","MI","MN","MS","MO","MT","NE","NV","NH",
-                "NJ","NM","NC","ND","OH","OK","OR","PA","RI","SC",
-                "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
-        };
-
-        final List<String> usStatesList = new ArrayList<>(Arrays.asList(usStates));
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, usStatesList) {
+        final List<String> stateArr = new ArrayList<>(Arrays.asList(usStates));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,stateArr){
 
             @Override
-            public boolean isEnabled(int position) {
-                if (position == 0) {
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
                     // Disable the first item from Spinner
-                    // First item will be used for hint
+                    // First item will be use for hint
                     return false;
-                } else {
+                }
+                else
+                {
                     return true;
                 }
             }
@@ -101,30 +110,18 @@ public class MainActivity extends AppCompatActivity {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if(position == 0){
-                    /*SpannableStringBuilder builder3 = new SpannableStringBuilder();
-                    builder3.append(hint3);
-                    int start3 = builder3.length();
-                    builder3.append(asterisk);
-                    int end3 = builder3.length();
-                    builder3.setSpan(new ForegroundColorSpan(Color.RED), start3, end3,
-                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                    state.setHint(builder3);*/  
                     // Set the hint text color gray
-                    tv.setTextColor(Color.rgb(156,156,156));
+                    tv.setTextColor(Color.GRAY);
                 }
                 else {
                     tv.setTextColor(Color.BLACK);
                 }
-
                 return view;
             }
         };
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -142,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -152,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 TextView addressField = (TextView)findViewById(R.id.addressField);
                 TextView cityField =(TextView)findViewById(R.id.cityField);
-                Spinner stateField =(Spinner) findViewById(R.id.stateField);
+                Spinner stateField = (Spinner)findViewById(R.id.stateField);
                 addressField.setText("");
                 cityField.setText("");
                 stateField.setSelection(0);
@@ -233,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
     public void setTextFields() {
         TextView addr = (TextView)findViewById(R.id.addressField);
         TextView city = (TextView)findViewById(R.id.cityField);
-        Spinner state = (Spinner) findViewById(R.id.stateField);
+        Spinner state = (Spinner)findViewById(R.id.stateField);
 
         //****** HINT 1*****
         String hint1 = "Street Address                            ";
@@ -243,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         int start = builder1.length();
         builder1.append(asterisk);
         int end = builder1.length();
-        builder1.setSpan(new ForegroundColorSpan(Color.RED), start, end,
+        builder1.setSpan(new ForegroundColorSpan(RED), start, end,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         addr.setHint(builder1);
@@ -255,33 +253,141 @@ public class MainActivity extends AppCompatActivity {
         int start2 = builder2.length();
         builder2.append(asterisk);
         int end2 = builder2.length();
-        builder2.setSpan(new ForegroundColorSpan(Color.RED), start2, end2,
+        builder2.setSpan(new ForegroundColorSpan(RED), start2, end2,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         city.setHint(builder2);
-
-        /*//****** HINT 3*****
-        String hint3 = "State  ";
-        SpannableStringBuilder builder3 = new SpannableStringBuilder();
-        builder3.append(hint3);
-        int start3 = builder3.length();
-        builder3.append(asterisk);
-        int end3 = builder3.length();
-        builder3.setSpan(new ForegroundColorSpan(Color.RED), start3, end3,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        state.setHint(builder3);*/
     }
 
     public void goToActivity2(View view) {
         TextView addressField = (TextView)findViewById(R.id.addressField);
-        TextView cityField =(TextView)findViewById(R.id.cityField);
-        Spinner stateField =(Spinner) findViewById(R.id.stateField);
-        String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
+        TextView cityField = (TextView)findViewById(R.id.cityField);
+        Spinner stateField = (Spinner)findViewById(R.id.stateField);
 
-        HTTPRequestClass httpRequest = new HTTPRequestClass();
-        httpRequest.execute(arr);
-        Intent intent = new Intent(MainActivity.this, Main3Activity.class);
-        startActivity(intent);
+        if (addressField.getText().toString().matches("") || cityField.getText().toString().matches("") || stateField.getSelectedItemPosition()==0) {
+            alert("Please Fill All Fields");
+        }
+
+        else {
+            String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
+
+            HTTPRequestClass httpRequest = new HTTPRequestClass();
+            httpRequest.execute(arr);
+
+        }
+    }
+
+    public void alert (String msg) {
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setMessage(msg);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+    class HTTPRequestClass extends AsyncTask<String, Void, String> {
+        //private final Context context;
+
+       /* public HTTPRequestClass() {
+            this.context = context;
+        } */
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                String addressInput, cityInput, stateInput;
+                addressInput = params[0];
+                cityInput = params[1];
+                stateInput = params[2];
+
+                addressInput = addressInput.replaceAll(" ", "+");
+                cityInput = cityInput.replaceAll(" ", "+");
+
+                URL url = new URL("http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id=X1-ZWz1g43lmml3wr_2hwdv&address="+addressInput+"&citystatezip="+cityInput+"+"+stateInput);
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+
+
+                // read result
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                StringBuffer sb = new StringBuffer();
+                String line;
+                while ((line = br.readLine()) != null) {
+
+                    sb.append(line);
+                    break;
+                }
+                br.close();
+                // Log.d("RESUUUULT",sb.toString());
+                return sb.toString();
+            } //end try
+            catch (Exception e) {
+                System.out.println(e);
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //alert("Please Enter Valid Address"); Request successfully processed
+            if (result != null) {
+
+                try {
+
+                    JSONObject jsonObj = null;
+                    jsonObj = XML.toJSONObject(result);
+
+                    if (!jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("message").getString("text").equals("Request successfully processed")){
+                        alert("Please Enter Valid Address");
+                        this.cancel(true);
+                     }
+
+
+
+
+
+                    Log.d("JJJJJJJSSSSSSSOOOOONNNNN", jsonObj.toString());
+                   String MyStreet = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("street");
+                    String Myzipcode = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("zipcode");
+                    String MyCity = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("city");
+                    String MyState = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("state");
+                    String MyString = MyStreet+", "+MyCity+", "+MyState+", "+Myzipcode;
+                    String ZPID = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getString("zpid");
+                    String MyPrice = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("zestimate").getJSONObject("amount").getString("content");
+                    Log.d("CCCUUURREENCCCY",MyPrice);
+
+                    //Intent intent = new Intent(MainActivity.this, Main3Activity.class);
+                    //   startActivity(intent);
+
+                    Intent i1 = new Intent(MainActivity.this, Main3Activity.class);
+                    i1.putExtra("MyStreet", MyStreet);
+                    i1.putExtra("Myzipcode",Myzipcode);
+                    i1.putExtra("MyCity",MyCity);
+                    i1.putExtra("MyState",MyState);
+                    i1.putExtra("ZPID",ZPID);
+                    i1.putExtra("MyPrice",MyPrice);
+                    startActivity(i1);
+
+
+
+                    // Tab1fragment mm = new Tab1fragment();
+                    // mm.MYMETHOD("hhhhh");
+                    // JSONArray jsonArray = new JSONArray(result);
+               /* String aa, bb, cc;
+               for (int i=0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObj = jsonArray.getJSONObject(i);
+                    aa = jsonObj.getString("address");
+                   Log.d("WWWWWwwwwwwwwwwwwwWW",aa);
+                } */
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

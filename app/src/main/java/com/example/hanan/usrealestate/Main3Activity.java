@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.*;
@@ -27,6 +29,14 @@ import android.view.View;
 import android.content.SharedPreferences;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static android.R.drawable.btn_star_big_on;
 import static android.R.drawable.star_big_off;
@@ -43,6 +53,11 @@ public class Main3Activity extends AppCompatActivity {
 
     SharedPreferences sharedpreferences;
 
+
+
+    public static String MyChart;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,6 +73,15 @@ public class Main3Activity extends AppCompatActivity {
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Property Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        //String myZPID = getIntent().getStringExtra ("ZPID");
+
+
+
+
+
+
         //setToolbar();
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -67,6 +91,33 @@ public class Main3Activity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+    }
+    public String Pstreet (){
+        String text = getIntent().getStringExtra ("MyStreet");
+        return text;
+    }
+    public String Pcity (){
+        String text = getIntent().getStringExtra ("MyCity");
+        return text;
+    }
+
+    public String Pstate (){
+        String text = getIntent().getStringExtra ("MyState");
+        return text;
+    }
+    public String Pzipcode (){
+        String text = getIntent().getStringExtra ("Myzipcode");
+        return text;
+    }
+    public String Pprice (){
+        String text = getIntent().getStringExtra ("MyPrice");
+        return text;
+    }
+
+    public String resultID (){
+        String id = getIntent().getStringExtra ("ZPID");
+        return id;
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
