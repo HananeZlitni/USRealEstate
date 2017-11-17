@@ -62,7 +62,7 @@ public class Tab2fragment extends Fragment {
 
         //set Chart
         PhotoView photoView = (PhotoView)view.findViewById(R.id.photo_view);
-        Picasso.with(getContext()).load("https://yt3.ggpht.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAAAAAA/OixOH_h84Po/s900-c-k-no-mo-rj-c0xffffff/photo.jpg").fit().into(photoView);
+        Picasso.with(getContext()).load("https://www.zillow.com/app?chartDuration=1year&chartType=partner&height=150&page=webservice%2FGetChart&service=chart&showPercent=true&width=300&zpid=48749425").fit().into(photoView);
 
 
         //photoView.setImageDrawable(LoadImageFromWebOperations("https://yt3.ggpht.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAAAAAA/OixOH_h84Po/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"));
@@ -97,51 +97,5 @@ public class Tab2fragment extends Fragment {
 }
 
 
- class HTTPRequestClass1 extends AsyncTask<String, Void, String> {
 
-     @Override
-     protected String doInBackground(String... params) {
-         try {
-             String uID, pID, widh;
-             widh = params[0];
-
-
-             //zws-id=X1-ZWz1g43lmml3wr_2hwdv
-
-             URL url = new URL("http://www.zillow.com/webservice/GetChart.htm?zws-id=X1-ZWz1g43lmml3wr_2hwdv&unit-type=percent&zpid=48749425&width=300&height=150");
-             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-             // read result
-             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-             StringBuffer sb = new StringBuffer();
-             String line;
-             while ((line = br.readLine()) != null) {
-                 sb.append(line);
-                 break;
-             }
-             br.close();
-             return sb.toString();
-         } //end try
-         catch (Exception e) {
-             System.out.println(e);
-         }
-         return "";
-     }
-
-     @Override
-     protected void onPostExecute(String result) {
-         if (result != null) {
-
-             try {
-                 JSONArray jsonArray = new JSONArray(result);
-                 String symbol, name, desc;
-                 for (int i = 0; i < jsonArray.length(); i++) {
-                     JSONObject jsonObj = jsonArray.getJSONObject(i);
-                 }
-             } catch (JSONException e) {
-                 e.printStackTrace();
-             }
-         }
-
-     }
- }
 
