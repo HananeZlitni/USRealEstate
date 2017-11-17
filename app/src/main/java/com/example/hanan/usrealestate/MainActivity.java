@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -25,8 +27,20 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.view.ViewGroup;
+import android.graphics.Color;
+import android.widget.AdapterView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
+import java.io.BufferedReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
+import android.content.Intent;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.*;
@@ -35,6 +49,25 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.XML;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
+import android.annotation.SuppressLint;
+
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+
+import android.widget.TableLayout;
+import android.widget.TableRow;
+
+import static android.graphics.Color.RED;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +75,7 @@ import java.util.List;
 import static android.graphics.Color.RED;
 
 public class MainActivity extends AppCompatActivity {
+
     final String[] usStates = new String[] {
             "State                      *", "CA","NY","AL","AK","AZ","AR","CO","CT","DE","FL",
             "GA","HI","ID","IL","IN","IA","KS","KY","LA","ME",
@@ -240,15 +274,16 @@ public class MainActivity extends AppCompatActivity {
         TextView cityField = (TextView)findViewById(R.id.cityField);
         Spinner stateField = (Spinner)findViewById(R.id.stateField);
 
-        if (addressField.getText().toString().matches("") || cityField.getText().toString().matches("") || stateField.getSelectedItemPosition()==0)
+        if (addressField.getText().toString().matches("") || cityField.getText().toString().matches("") || stateField.getSelectedItemPosition()==0) {
             alert("Please Fill All Fields");
+        }
 
         else {
             String[] arr = {addressField.getText().toString(), cityField.getText().toString(), stateField.getSelectedItem().toString()};
-            //  Intent intent = new Intent(MainActivity.this, Main3Activity.class);
-            //  startActivity(intent);
+
             HTTPRequestClass httpRequest = new HTTPRequestClass();
             httpRequest.execute(arr);
+
         }
     }
 
