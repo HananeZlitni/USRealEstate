@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+       getSupportActionBar().setIcon(R.drawable.ic_action_name);
+
+
+
         //********** SET TEXT FIELDS ************
         setTextFields();
 
