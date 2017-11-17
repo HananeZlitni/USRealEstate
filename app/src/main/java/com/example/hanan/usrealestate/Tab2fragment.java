@@ -83,9 +83,9 @@ public class Tab2fragment extends Fragment {
             */
 
         //set Chart
-        PhotoView photoView = (PhotoView)view.findViewById(R.id.photo_view);
-        Picasso.with(getContext()).load("https://www.zillow.com:443/app?chartDuration=1year&chartType=partner&height=100&page=webservice%2FGetChart&service=chart&showPercent=true&width=200&zpid=2093613455"
-).fit().into(photoView);
+      // public PhotoView photoView = (PhotoView)view.findViewById(R.id.photo_view);
+     //   Picasso.with(getContext()).load("https://www.zillow.com:443/app?chartDuration=1year&chartType=partner&height=100&page=webservice%2FGetChart&service=chart&showPercent=true&width=200&zpid=2093613455"
+//).fit().into(photoView);
 
 
         //photoView.setImageDrawable(LoadImageFromWebOperations("https://yt3.ggpht.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAAAAAA/OixOH_h84Po/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"));
@@ -116,7 +116,6 @@ public class Tab2fragment extends Fragment {
     }
 
     public void myF (String s){
-      //  t2.setText(s);
     }
 
     class HTTPRequestClass2 extends AsyncTask<String, Void, String> {
