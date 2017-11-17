@@ -73,7 +73,7 @@ public class Main3Activity extends AppCompatActivity {
          toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Property Details");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //String myZPID = getIntent().getStringExtra ("ZPID");
 

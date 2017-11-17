@@ -83,9 +83,6 @@ public class Tab2fragment extends Fragment {
             */
 
         //set Chart
-      // public PhotoView photoView = (PhotoView)view.findViewById(R.id.photo_view);
-     //   Picasso.with(getContext()).load("https://www.zillow.com:443/app?chartDuration=1year&chartType=partner&height=100&page=webservice%2FGetChart&service=chart&showPercent=true&width=200&zpid=2093613455"
-//).fit().into(photoView);
 
 
         //photoView.setImageDrawable(LoadImageFromWebOperations("https://yt3.ggpht.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAAAAAA/OixOH_h84Po/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"));
@@ -116,6 +113,7 @@ public class Tab2fragment extends Fragment {
     }
 
     public void myF (String s){
+      //  t2.setText(s);
     }
 
     class HTTPRequestClass2 extends AsyncTask<String, Void, String> {
@@ -168,7 +166,12 @@ public class Tab2fragment extends Fragment {
                     String MyString1 = jsonObj.getJSONObject("Chart:chart").getJSONObject("response").getString("url");
                     Log.d("MY UUUUURRRRRRLLLLL",MyString1);
                     //t2.setText(MyString1);
-                    URL1 = MyString1;
+                    //URL1 = MyString1;
+                    //Intent i1 = new Intent(HTTPRequestClass2.this, Tab2fragment.class);
+                    //i1.putExtra("MyStreet", MyStreet);
+
+                    PhotoView photoView = (PhotoView)getView().findViewById(R.id.photo_view);
+                    Picasso.with(getContext()).load(MyString1).fit().into(photoView);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
