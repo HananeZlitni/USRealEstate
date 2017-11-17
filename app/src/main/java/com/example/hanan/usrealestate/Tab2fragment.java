@@ -55,13 +55,14 @@ import java.net.URL;
 public class Tab2fragment extends Fragment {
 
     private static final String TAG = "Tab2Fragment";
-    public TextView t2;
+  //  public TextView t2;
+    public String URL1;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab2_fragment,container,false);
-        t2 = view.findViewById(R.id.textTab2);
+       // t2 = view.findViewById(R.id.textTab2);
 
         // use this id in second HTTP request
         String cId = ((Main3Activity) getActivity()).resultID();
@@ -83,7 +84,8 @@ public class Tab2fragment extends Fragment {
 
         //set Chart
         PhotoView photoView = (PhotoView)view.findViewById(R.id.photo_view);
-        Picasso.with(getContext()).load("https://www.zillow.com/app?chartDuration=1year&chartType=partner&height=150&page=webservice%2FGetChart&service=chart&showPercent=true&width=300&zpid=48749425").fit().into(photoView);
+        Picasso.with(getContext()).load("https://www.zillow.com:443/app?chartDuration=1year&chartType=partner&height=100&page=webservice%2FGetChart&service=chart&showPercent=true&width=200&zpid=2093613455"
+).fit().into(photoView);
 
 
         //photoView.setImageDrawable(LoadImageFromWebOperations("https://yt3.ggpht.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAAAAAA/OixOH_h84Po/s900-c-k-no-mo-rj-c0xffffff/photo.jpg"));
@@ -114,7 +116,7 @@ public class Tab2fragment extends Fragment {
     }
 
     public void myF (String s){
-        t2.setText(s);
+      //  t2.setText(s);
     }
 
     class HTTPRequestClass2 extends AsyncTask<String, Void, String> {
@@ -166,7 +168,8 @@ public class Tab2fragment extends Fragment {
                     Log.d("JJJJJJJSSSSSOOONNNNN", jsonObj.toString());
                     String MyString1 = jsonObj.getJSONObject("Chart:chart").getJSONObject("response").getString("url");
                     Log.d("MY UUUUURRRRRRLLLLL",MyString1);
-                    t2.setText(MyString1);
+                    //t2.setText(MyString1);
+                    URL1 = MyString1;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
