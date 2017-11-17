@@ -18,7 +18,6 @@ import android.util.Log;
 import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -344,25 +343,46 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            //alert("Please Enter Valid Address"); Request successfully processed
             if (result != null) {
 
                 try {
 
                     JSONObject jsonObj = null;
                     jsonObj = XML.toJSONObject(result);
-                    Log.d("JJJJJJJSSSSSSSOOOOONNNN", jsonObj.toString());
-                    Log.d("MMY ADDRESSS", jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("request").getString("address"));
-                    String MyString1 = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("request").getString("address");
-                    String MyString2 = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("request").getString("citystatezip");
-                    String MyString = MyString1+", "+MyString2;
+
+                    if (!jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("message").getString("text").equals("Request successfully processed")){
+                        alert("Please Enter Valid Address");
+                        this.cancel(true);
+                     }
+
+
+
+
+
+                    Log.d("JJJJJJJSSSSSSSOOOOONNNNN", jsonObj.toString());
+                   String MyStreet = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("street");
+                    String Myzipcode = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("zipcode");
+                    String MyCity = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("city");
+                    String MyState = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("state");
+                    String MyString = MyStreet+", "+MyCity+", "+MyState+", "+Myzipcode;
                     String ZPID = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getString("zpid");
+                    String MyPrice = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("zestimate").getJSONObject("amount").getString("content");
+                    Log.d("CCCUUURREENCCCY",MyPrice);
+
                     //Intent intent = new Intent(MainActivity.this, Main3Activity.class);
                     //   startActivity(intent);
 
                     Intent i1 = new Intent(MainActivity.this, Main3Activity.class);
-                    i1.putExtra("MyData", MyString);
-                    i1.putExtra("MyID",ZPID);
+                    i1.putExtra("MyStreet", MyStreet);
+                    i1.putExtra("Myzipcode",Myzipcode);
+                    i1.putExtra("MyCity",MyCity);
+                    i1.putExtra("MyState",MyState);
+                    i1.putExtra("ZPID",ZPID);
+                    i1.putExtra("MyPrice",MyPrice);
                     startActivity(i1);
+
+
 
                     // Tab1fragment mm = new Tab1fragment();
                     // mm.MYMETHOD("hhhhh");
