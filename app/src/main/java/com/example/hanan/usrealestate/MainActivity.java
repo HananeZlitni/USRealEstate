@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             "NJ","NM","NC","ND","OH","OK","OR","PA","RI","SC",
             "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,59 +169,92 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //******** ADD FAVORITE PROPERTIES TO TABLE ***********
+        int counter = 0;
+        int rowID= 100;
+        int txtViewID= 200;
+        final SharedPreferences sharedPrefs = getSharedPreferences("MyPrefsFile",MODE_PRIVATE);
+        Map<String, ?> allEntries = sharedPrefs.getAll();
+
         //********** SCREEN 1 TABLE ************
-        final TableRow tableRow = (TableRow)findViewById(R.id.table1row);
         final TableLayout table1 = (TableLayout)findViewById(R.id.table1);
-        tableRow.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public void onClick(View v) {
-                tableRow.setOnTouchListener(new SwipeDismissTouchListener(
-                        tableRow,
-                        null,
-                        new SwipeDismissTouchListener.DismissCallbacks() {
-                            @Override
-                            public boolean canDismiss(Object token) {
-                                return true;
-                            }
+        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
 
-                            @Override
-                            public void onDismiss(View view, Object token) {
-                                deleteAlert("Are You Sure You Want to Delete this Property?");
-                            }
+            final TableRow tr = new TableRow(this);
+            if (counter % 2 != 0)
+                tr.setBackgroundColor(Color.RED);
+            tr.setId(R.id.RowID);
+            tr.setBackgroundResource(R.drawable.row_border);
+            tr.setWeightSum(1);
+            TextView property = new TextView(this);
+            //property.setId(Integer.parseInt(entry.getKey()));
+            property.setGravity(1);
+            property.setTextColor(Color.BLACK);
+            property.setTextSize(18);
+            property.setText(entry.getKey());
+            tr.addView(property);
+            firstTable.addView(tr);
+            counter++;
 
-                            @Override
-                            public boolean performClick() {
-                                return true;
-                            }
 
-                            public void deleteAlert(String msg) {
-                                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                                alertDialog.setMessage(msg);
-                                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                                        new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                table1.removeView(tableRow);
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                alertDialog.show();
-                            }
-                        }));
-            }
-        });
+            tr.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ClickableViewAccessibility")
+                @Override
+                public void onClick(View v) {
+                    tr.setOnTouchListener(new SwipeDismissTouchListener(
+                            tr,
+                            null,
+                            new SwipeDismissTouchListener.DismissCallbacks() {
+                                @Override
+                                public boolean canDismiss(Object token) {
+                                    return true;
+                                }
+
+                                @Override
+                                public void onDismiss(View view, Object token) {
+                                    deleteAlert("Are You Sure You Want to Delete this Property?");
+                                }
+
+                                @Override
+                                public boolean performClick() {
+                                    return true;
+                                }
+
+                                public void deleteAlert(String msg) {
+                                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                                    alertDialog.setMessage(msg);
+                                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    table1.removeView(tr);
+                                                    SharedPreferences.Editor editPref = sharedPrefs.edit();
+                                                    editPref.remove(tr.getId()+"");
+                                                    dialog.dismiss();
+                                                    editPref.apply();
+                                                }
+                                            });
+                                    alertDialog.show();
+                                }
+                            }));
+                }
+            });
+
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -360,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    Log.d("JJJJJJJSSSSSSSOOOOONNNNN", jsonObj.toString());
+                    Log.d("JJJJJJJSSSSSSSOOOOONNNN", jsonObj.toString());
                    String MyStreet = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("street");
                     String Myzipcode = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("zipcode");
                     String MyCity = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("city");
@@ -368,6 +404,7 @@ public class MainActivity extends AppCompatActivity {
                     String MyString = MyStreet+", "+MyCity+", "+MyState+", "+Myzipcode;
                     String ZPID = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getString("zpid");
                     String MyPrice = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("zestimate").getJSONObject("amount").getString("content");
+
                     Log.d("CCCUUURREENCCCY",MyPrice);
 
                     //Intent intent = new Intent(MainActivity.this, Main3Activity.class);
