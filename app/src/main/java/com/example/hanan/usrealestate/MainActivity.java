@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +15,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.util.Xml;
@@ -68,6 +73,9 @@ import android.text.style.ForegroundColorSpan;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import com.github.chrisbanes.photoview.PhotoView;
+import com.squareup.picasso.Picasso;
+
 import static android.graphics.Color.RED;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,6 +101,41 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
        getSupportActionBar().setIcon(R.drawable.ic_action_name);
+
+
+
+
+        PhotoView photoView2 = (PhotoView) findViewById(R.id.photo_view3);
+        Picasso.with(getBaseContext()).load("https://www.zillowstatic.com/vstatic/64dd1c9/static/logos/Zillowlogo_200x50.gif").fit().into(photoView2);
+
+        //making the text clickable
+        TextView textView = (TextView) findViewById(R.id.google3);
+        SpannableString ss = new SpannableString("© Zillow, Inc., 2006-2016. \nGoogle Maps. (2017).");
+        ClickableSpan span1 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                // do some thing
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.zillow.com/"));
+                startActivity(browserIntent);
+            }
+        };
+        ss.setSpan(span1, 2, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        ClickableSpan span2 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                // do some thing
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developers.google.com/maps/"));
+                startActivity(browserIntent);
+            }
+        };
+        ss.setSpan(span2, 28, 39, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+
 
 
 

@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
+
+import com.github.chrisbanes.photoview.PhotoView;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -34,6 +41,43 @@ public class Tab1fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.tab1_fragment,container,false);
         t = view.findViewById(R.id.textTab1);
+
+
+
+        PhotoView photoView2 = (PhotoView)view.findViewById(R.id.photo_view2);
+        Picasso.with(getContext()).load("https://www.zillowstatic.com/vstatic/64dd1c9/static/logos/Zillowlogo_200x50.gif").fit().into(photoView2);
+
+        //making the text clickable
+        TextView textView = (TextView)view.findViewById(R.id.google2);
+        SpannableString ss = new SpannableString("© Zillow, Inc., 2006-2016. \nGoogle Maps. (2017).");
+        ClickableSpan span1 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                // do some thing
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.zillow.com/"));
+                startActivity(browserIntent);
+            }
+        };
+        ss.setSpan(span1, 2, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        ClickableSpan span2 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                // do some thing
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developers.google.com/maps/"));
+                startActivity(browserIntent);
+            }
+        };
+        ss.setSpan(span2, 28, 39, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+
+
+
 
         //*******LOCATION*******
         String detailsText = ("View the Location of \n"+((Main3Activity) getActivity()).Pstreet()+", "+((Main3Activity) getActivity()).Pcity()+", "+((Main3Activity) getActivity()).Pstate());

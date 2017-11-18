@@ -29,7 +29,6 @@
         android:layout_marginBottom="60dp"
         android:layout_marginStart="110dp"
         android:layout_toEndOf="@+id/google"
-        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
