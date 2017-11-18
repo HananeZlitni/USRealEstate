@@ -94,6 +94,15 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onRestart() {
+
+        super.onRestart();
+        recreate();
+
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -231,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
             final TableRow tr = new TableRow(this);
             if (counter % 2 != 0)
                 tr.setBackgroundColor(Color.RED);
-            tr.setId(R.id.RowID);
+            tr.setId(Integer.parseInt(entry.getKey()));
             tr.setBackgroundResource(R.drawable.row_border);
             tr.setWeightSum(1);
             TextView property = new TextView(this);
@@ -280,11 +289,14 @@ public class MainActivity extends AppCompatActivity {
                                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    table1.removeView(tr);
+
                                                     SharedPreferences.Editor editPref = sharedPrefs.edit();
                                                     editPref.remove(tr.getId()+"");
+                                                    table1.removeView(tr);
                                                     dialog.dismiss();
                                                     editPref.apply();
+                                                    recreate();
+
                                                 }
                                             });
                                     alertDialog.show();
