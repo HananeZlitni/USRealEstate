@@ -163,7 +163,8 @@ public class Main3Activity extends AppCompatActivity {
             }else {
                 item.setIcon(android.R.drawable.btn_star_big_on);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(ID, true);
+                //editor.putBoolean(ID, true);
+                editor.putString(ID,Pstreet()+", "+Pcity()+", "+Pstate());
                 editor.apply();
 
 
