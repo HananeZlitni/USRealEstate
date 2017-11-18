@@ -258,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
             tr.setId(Integer.parseInt(entry.getKey()));
             tr.setBackgroundResource(R.drawable.row_border);
             tr.setWeightSum(1);
-            tr.setPadding(13,2,2,20);
-            TextView property = new TextView(this);
+            tr.setPadding(13,30,13,40);
+            final TextView property = new TextView(this);
             //property.setId(Integer.parseInt(entry.getKey()));
             property.setGravity(1);
             property.setTextColor(Color.BLACK);
@@ -275,19 +275,12 @@ public class MainActivity extends AppCompatActivity {
                     String street= sequence.substring(0, sequence.indexOf(","));
                     String city= sequence.substring(sequence.indexOf(",")+2, sequence.lastIndexOf(","));
                     String state= sequence.substring(sequence.lastIndexOf(",")+2);
-                    Log.d("STREEEEEEEEEET",street);
-                    Log.d("CITYYYYYYYYYY",city);
-                    Log.d("STAAAAAAAATE",state);
 
-                    //21822 68th Ave, Bayside, NY
 
                     String[] arr = {street,city,state};
                     httpClass.execute(arr);
                 }
             });
-
-            //counter++;
-
 
             tr.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("ClickableViewAccessibility")
@@ -297,6 +290,11 @@ public class MainActivity extends AppCompatActivity {
                             tr,
                             null,
                             new SwipeDismissTouchListener.DismissCallbacks() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    return false;
+                                }
+
                                 @Override
                                 public boolean canDismiss(Object token) {
                                     return true;
@@ -339,9 +337,7 @@ public class MainActivity extends AppCompatActivity {
                             }));
                 }
             });
-
         }
-
     }
 
     @Override
