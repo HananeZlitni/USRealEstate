@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        
         //********** CLEAR BUTTON ************
         Button clearBtn = (Button)findViewById(R.id.clear);
         clearBtn.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //******** ADD FAVORITE PROPERTIES TO TABLE ***********
-        int counter = 0;
+            int counter = 0;
         int rowID= 100;
         int txtViewID= 200;
         final SharedPreferences sharedPrefs = getSharedPreferences("MyPrefsFile",MODE_PRIVATE);
