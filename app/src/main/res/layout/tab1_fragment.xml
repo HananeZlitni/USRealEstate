@@ -8,12 +8,10 @@
         android:id="@+id/textTab1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
         android:layout_marginBottom="30dp"
-        android:layout_marginLeft="70dp"
-        android:textSize="18sp"
-        android:gravity="center"/>
+        android:layout_marginLeft="90dp"
+        android:textSize="18sp"/>
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
 

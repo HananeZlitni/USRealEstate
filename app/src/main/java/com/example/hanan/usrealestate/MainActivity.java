@@ -259,12 +259,12 @@ public class MainActivity extends AppCompatActivity {
             tr.setId(Integer.parseInt(entry.getKey()));
             tr.setBackgroundResource(R.drawable.row_border);
             tr.setWeightSum(1);
-            tr.setPadding(13,40,13,50);
+            tr.setPadding(13,40,13,40);
             final TextView property = new TextView(this);
             //property.setId(Integer.parseInt(entry.getKey()));
             property.setGravity(1);
             property.setTextColor(Color.BLACK);
-            property.setTextSize(18);
+            property.setTextSize(13);
             property.setHeight(70);
             property.setText((CharSequence) entry.getValue());
             tr.addView(property);

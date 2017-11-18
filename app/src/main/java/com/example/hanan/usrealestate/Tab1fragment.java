@@ -82,6 +82,8 @@ public class Tab1fragment extends Fragment {
         //*******LOCATION*******
         String detailsText = ("View the Location of \n"+((Main3Activity) getActivity()).Pstreet()+", "+((Main3Activity) getActivity()).Pcity()+", "+((Main3Activity) getActivity()).Pstate());
         t.setText(detailsText);
+        t.setGravity(1);
+        t.setWidth(350);
 
         t.setOnClickListener(new View.OnClickListener() {
             @Override
