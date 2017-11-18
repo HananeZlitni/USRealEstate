@@ -240,9 +240,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //******** ADD FAVORITE PROPERTIES TO TABLE ***********
-            int counter = 0;
-        int rowID= 100;
-        int txtViewID= 200;
         final SharedPreferences sharedPrefs = getSharedPreferences("MyPrefsFile",MODE_PRIVATE);
         Map<String, ?> allEntries = sharedPrefs.getAll();
 
@@ -251,7 +248,6 @@ public class MainActivity extends AppCompatActivity {
         final HTTPRequestClass httpClass = new HTTPRequestClass();
 
         for (final Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            //TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
 
             final TableRow tr = new TableRow(this);
             /*if (counter % 2 != 0)
@@ -261,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
             tr.setWeightSum(1);
             tr.setPadding(13,40,13,40);
             final TextView property = new TextView(this);
-            //property.setId(Integer.parseInt(entry.getKey()));
             property.setGravity(1);
             property.setTextColor(Color.BLACK);
             property.setTextSize(13);
@@ -269,19 +264,6 @@ public class MainActivity extends AppCompatActivity {
             property.setText((CharSequence) entry.getValue());
             tr.addView(property);
             table1.addView(tr);
-            /*property.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String sequence = ((CharSequence) entry.getValue()).toString();
-                    String street= sequence.substring(0, sequence.indexOf(","));
-                    String city= sequence.substring(sequence.indexOf(",")+2, sequence.lastIndexOf(","));
-                    String state= sequence.substring(sequence.lastIndexOf(",")+2);
-
-
-                    String[] arr = {street,city,state};
-                    httpClass.execute(arr);
-                }
-            });*/
 
 
             tr.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
@@ -312,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    tr.animate().translationX(0);
                                     dialog.dismiss();
                                 }
                             });
@@ -332,65 +313,6 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.show();
                 }
             });
-            /*
-            //the swipe class doesn't work unless it is inside a click listener
-            //to prevent the swipe and clicking to the details activity from interfering
-            //we added the top and bottom padding to show that the swipe action is working
-            tr.setOnClickListener(new View.OnClickListener() {
-                @SuppressLint("ClickableViewAccessibility")
-                @Override
-                public void onClick(View v) {
-                    tr.setOnTouchListener(new SwipeDismissTouchListener(
-                            tr,
-                            null,
-                            new SwipeDismissTouchListener.DismissCallbacks() {
-                                @Override
-                                public boolean onTouch(View v, MotionEvent event) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean canDismiss(Object token) {
-                                    return true;
-                                }
-
-                                @Override
-                                public void onDismiss(View view, Object token) {
-                                    deleteAlert("Are You Sure You Want to Delete this Property?");
-                                }
-
-                                @Override
-                                public boolean performClick() {
-                                    return true;
-                                }
-
-                                public void deleteAlert(String msg) {
-                                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                                    alertDialog.setMessage(msg);
-                                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                }
-                                            });
-                                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                    SharedPreferences.Editor editPref = sharedPrefs.edit();
-                                                    editPref.remove(tr.getId()+"");
-                                                    table1.removeView(tr);
-                                                    dialog.dismiss();
-                                                    editPref.apply();
-                                                    recreate();
-
-                                                }
-                                            });
-                                    alertDialog.show();
-                                }
-                            }));
-                }
-            });*/
         }
     }
 
