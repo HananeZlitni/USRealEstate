@@ -26,6 +26,7 @@ import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -299,6 +300,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSwipeLeft() {
                     super.onSwipeLeft();
+                    tr.startAnimation(AnimationUtils.loadAnimation(
+                            MainActivity.this, R.anim.slide
+                    ));
                     deleteAlert("Are you sure you want to delete the property?");
                 }
 
@@ -308,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    tr.animate().translationX(0);
                                     dialog.dismiss();
                                 }
                             });
