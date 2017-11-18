@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
             tr.setId(Integer.parseInt(entry.getKey()));
             tr.setBackgroundResource(R.drawable.row_border);
             tr.setWeightSum(1);
-            tr.setPadding(13,30,13,40);
+            tr.setPadding(13,40,13,50);
             final TextView property = new TextView(this);
             //property.setId(Integer.parseInt(entry.getKey()));
             property.setGravity(1);
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
             property.setText((CharSequence) entry.getValue());
             tr.addView(property);
             table1.addView(tr);
-            property.setOnClickListener(new View.OnClickListener() {
+            /*property.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String sequence = ((CharSequence) entry.getValue()).toString();
@@ -280,8 +280,57 @@ public class MainActivity extends AppCompatActivity {
                     String[] arr = {street,city,state};
                     httpClass.execute(arr);
                 }
-            });
+            });*/
 
+
+            tr.setOnTouchListener(new OnSwipeTouchListener(MainActivity.this) {
+                @Override
+                public void onClick() {
+                    String sequence = ((CharSequence) entry.getValue()).toString();
+                    String street= sequence.substring(0, sequence.indexOf(","));
+                    String city= sequence.substring(sequence.indexOf(",")+2, sequence.lastIndexOf(","));
+                    String state= sequence.substring(sequence.lastIndexOf(",")+2);
+
+
+                    String[] arr = {street,city,state};
+                    httpClass.execute(arr);
+                }
+
+                @Override
+                public void onSwipeLeft() {
+                    super.onSwipeLeft();
+                    deleteAlert("Are you sure you want to delete the property?");
+                }
+
+                public void deleteAlert(String msg) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setMessage(msg);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    SharedPreferences.Editor editPref = sharedPrefs.edit();
+                                    editPref.remove(tr.getId()+"");
+                                    table1.removeView(tr);
+                                    dialog.dismiss();
+                                    editPref.apply();
+                                    recreate();
+
+                                }
+                            });
+                    alertDialog.show();
+                }
+            });
+            /*
+            //the swipe class doesn't work unless it is inside a click listener
+            //to prevent the swipe and clicking to the details activity from interfering
+            //we added the top and bottom padding to show that the swipe action is working
             tr.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("ClickableViewAccessibility")
                 @Override
@@ -336,7 +385,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }));
                 }
-            });
+            });*/
         }
     }
 
