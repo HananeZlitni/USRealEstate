@@ -138,8 +138,14 @@ public class Tab1fragment extends Fragment {
         propertyPrice.setTextColor(Color.BLACK);
         propertyPrice.setTextSize(16);
         propertyAddr.setWidth(100);
+        String tee = ((Main3Activity) getActivity()).Pprice();
+        if (tee.equals("0")){
+            propertyPrice.setText("Not for sale/rent");
+            tRow.addView(propertyPrice);
+        }
+        else {
         propertyPrice.setText("   $"+((Main3Activity) getActivity()).Pprice());
-        tRow.addView(propertyPrice);
+        tRow.addView(propertyPrice); }
 
         table.addView(tRow);
 
