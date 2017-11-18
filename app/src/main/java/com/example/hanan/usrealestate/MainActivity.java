@@ -528,8 +528,9 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
 
-                    JSONObject jsonObj = null;
+                     JSONObject jsonObj = null;
                     jsonObj = XML.toJSONObject(result);
+
 
                     if (!jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("message").getString("text").equals("Request successfully processed")){
                         alert("Please Enter Valid Address");
@@ -541,15 +542,18 @@ public class MainActivity extends AppCompatActivity {
 
 
                     Log.d("JJJJJJJSSSSSSSOOOOONNNN", jsonObj.toString());
-                   String MyStreet = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("street");
-                    String Myzipcode = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("zipcode");
-                    String MyCity = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("city");
-                    String MyState = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("state");
-                    String MyString = MyStreet+", "+MyCity+", "+MyState+", "+Myzipcode;
-                    String ZPID = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getString("zpid");
-                    String MyPrice = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("zestimate").getJSONObject("amount").getString("content");
+                    Object json = new JSONTokener(jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getString("result")).nextValue();
+                    if (json instanceof JSONObject) {
+                        String MyStreet = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("street");
+                        String Myzipcode = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("zipcode");
+                        String MyCity = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("city");
+                        String MyState = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("address").getString("state");
+                        String MyString = MyStreet + ", " + MyCity + ", " + MyState + ", " + Myzipcode;
+                        String ZPID = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getString("zpid");
+                        String MyPrice = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONObject("result").getJSONObject("zestimate").getJSONObject("amount").getString("content");
 
-                    Log.d("CCCUUURREENCCCY",MyPrice);
+
+                   // Log.d("CCCUUURREENCCCY",MyPrice);
 
                     //Intent intent = new Intent(MainActivity.this, Main3Activity.class);
                     //   startActivity(intent);
@@ -561,7 +565,55 @@ public class MainActivity extends AppCompatActivity {
                     i1.putExtra("MyState",MyState);
                     i1.putExtra("ZPID",ZPID);
                     i1.putExtra("MyPrice",MyPrice);
-                    startActivity(i1);
+                    startActivity(i1);  }
+
+                    else if (json instanceof JSONArray) {
+
+                        JSONArray jArray = jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("response").getJSONObject("results").getJSONArray("result");
+                        Log.d("TTTESSSSST","im here");
+                        JSONObject o = jArray.getJSONObject(2);
+                        JSONObject oo = o.getJSONObject("address");
+
+                        JSONObject b = jArray.getJSONObject(0);
+                       // JSONObject bb = b.getJSONObject("zpid");
+                        //zestimate
+                        String MyPrice = "0";
+                        JSONObject ccc = null;
+                        for(int i = 0; i < jArray.length(); i++){
+                            if (jArray.getJSONObject(i).has("zestimate")){
+                        JSONObject c = jArray.getJSONObject(i);
+                        //if(c.toString().equals("zestimate")) {
+                            Log.d("laast steeeep","sssssss");
+                        JSONObject cc = c.getJSONObject("zestimate");
+                                if (i+2<jArray.length() && cc.getJSONObject("amount").has("content")){
+                         ccc = cc.getJSONObject("amount");
+                                    MyPrice = ccc.getString("content");}}}
+
+
+
+                            String MyStreet = oo.getString("street");
+                            String Myzipcode = oo.getString("zipcode");
+                            String MyCity = oo.getString("city");
+                            String MyState = oo.getString("state");
+                            String ZPID = b.getString("zpid");
+
+                           // if (ccc != null){
+                            // MyPrice = ccc.getString("content");}
+
+                        Intent i1 = new Intent(MainActivity.this, Main3Activity.class);
+                        i1.putExtra("MyStreet", MyStreet);
+                        i1.putExtra("Myzipcode",Myzipcode);
+                        i1.putExtra("MyCity",MyCity);
+                        i1.putExtra("MyState",MyState);
+                        i1.putExtra("ZPID",ZPID);
+                        i1.putExtra("MyPrice",MyPrice);
+                        startActivity(i1);
+
+
+
+
+
+                        }
 
 
 
