@@ -84,6 +84,8 @@ public class SwipeDismissTouchListener implements View.OnTouchListener {
      * about a successful dismissal of the view for which it was created.
      */
     public interface DismissCallbacks {
+        boolean onTouch(View v, MotionEvent event);
+
         /**
          * Called to determine whether the view can be dismissed.
          */
