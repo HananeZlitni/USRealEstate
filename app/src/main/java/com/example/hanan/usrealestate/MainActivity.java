@@ -455,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     if (!jsonObj.getJSONObject("SearchResults:searchresults").getJSONObject("message").getString("text").equals("Request successfully processed")){
-                        alert("Please Enter Valid Address");
+                        alert("Please Enter a Valid Address");
                         this.cancel(true);
                      }
 
