@@ -93,10 +93,18 @@ public class MainActivity extends AppCompatActivity {
             "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
     };
 
+
     @Override
     protected void onRestart() {
 
+        TextView addressField = (TextView)findViewById(R.id.addressField);
+        TextView cityField =(TextView)findViewById(R.id.cityField);
+        Spinner stateField = (Spinner)findViewById(R.id.stateField);
+
         super.onRestart();
+        addressField.setText("");
+        cityField.setText("");
+        stateField.setSelection(0);
         recreate();
 
 
@@ -241,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         final TableLayout table1 = (TableLayout)findViewById(R.id.table1);
         final HTTPRequestClass httpClass = new HTTPRequestClass();
 
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+        for (final Map.Entry<String, ?> entry : allEntries.entrySet()) {
             //TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
 
             final TableRow tr = new TableRow(this);
@@ -258,12 +266,24 @@ public class MainActivity extends AppCompatActivity {
             property.setText((CharSequence) entry.getValue());
             tr.addView(property);
             table1.addView(tr);
-            tr.setOnClickListener(new View.OnClickListener() {
+            property.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //String[] arr = {sharedPrefs.getString(tr.entry.getKey())}
+                    String sequence = ((CharSequence) entry.getValue()).toString();
+                    String street= sequence.substring(0, sequence.indexOf(","));
+                    String city= sequence.substring(sequence.indexOf(",")+2, sequence.lastIndexOf(","));
+                    String state= sequence.substring(sequence.lastIndexOf(",")+2);
+                    Log.d("STREEEEEEEEEET",street);
+                    Log.d("CITYYYYYYYYYY",city);
+                    Log.d("STAAAAAAAATE",state);
+
+                    //21822 68th Ave, Bayside, NY
+
+                    String[] arr = {street,city,state};
+                    httpClass.execute(arr);
                 }
             });
+
             //counter++;
 
 
