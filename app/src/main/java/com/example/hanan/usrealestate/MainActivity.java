@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
             property.setGravity(1);
             property.setTextColor(Color.BLACK);
             property.setTextSize(18);
-            property.setText(entry.getKey());
+            property.setText((CharSequence) entry.getValue());
             tr.addView(property);
             table1.addView(tr);
             tr.setOnClickListener(new View.OnClickListener() {
