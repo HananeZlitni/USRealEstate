@@ -93,10 +93,18 @@ public class MainActivity extends AppCompatActivity {
             "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY",
     };
 
+
     @Override
     protected void onRestart() {
 
+        TextView addressField = (TextView)findViewById(R.id.addressField);
+        TextView cityField =(TextView)findViewById(R.id.cityField);
+        Spinner stateField = (Spinner)findViewById(R.id.stateField);
+
         super.onRestart();
+        addressField.setText("");
+        cityField.setText("");
+        stateField.setSelection(0);
         recreate();
 
 
@@ -108,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences prefs = getSharedPreferences("MyPrefsFile",MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        prefsEdit.remove("21822 68th Ave, Bayside, NY");
+        prefsEdit.commit();
 
        getSupportActionBar().setIcon(R.drawable.ic_action_name);
 
@@ -234,12 +247,14 @@ public class MainActivity extends AppCompatActivity {
 
         //********** SCREEN 1 TABLE ************
         final TableLayout table1 = (TableLayout)findViewById(R.id.table1);
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
+        final HTTPRequestClass httpClass = new HTTPRequestClass();
+
+        for (final Map.Entry<String, ?> entry : allEntries.entrySet()) {
+            //TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
 
             final TableRow tr = new TableRow(this);
-            if (counter % 2 != 0)
-                tr.setBackgroundColor(Color.RED);
+            /*if (counter % 2 != 0)
+                tr.setBackgroundColor(Color.RED);*/
             tr.setId(Integer.parseInt(entry.getKey()));
             tr.setBackgroundResource(R.drawable.row_border);
             tr.setWeightSum(1);
@@ -250,8 +265,26 @@ public class MainActivity extends AppCompatActivity {
             property.setTextSize(18);
             property.setText((CharSequence) entry.getValue());
             tr.addView(property);
-            firstTable.addView(tr);
-            counter++;
+            table1.addView(tr);
+            property.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String sequence = ((CharSequence) entry.getValue()).toString();
+                    String street= sequence.substring(0, sequence.indexOf(","));
+                    String city= sequence.substring(sequence.indexOf(",")+2, sequence.lastIndexOf(","));
+                    String state= sequence.substring(sequence.lastIndexOf(",")+2);
+                    Log.d("STREEEEEEEEEET",street);
+                    Log.d("CITYYYYYYYYYY",city);
+                    Log.d("STAAAAAAAATE",state);
+
+                    //21822 68th Ave, Bayside, NY
+
+                    String[] arr = {street,city,state};
+                    httpClass.execute(arr);
+                }
+            });
+
+            //counter++;
 
 
             tr.setOnClickListener(new View.OnClickListener() {
@@ -477,6 +510,8 @@ public class MainActivity extends AppCompatActivity {
                     i1.putExtra("ZPID",ZPID);
                     i1.putExtra("MyPrice",MyPrice);
                     startActivity(i1);
+
+
 
 
 
