@@ -73,7 +73,8 @@ public class Tab2fragment extends Fragment {
 
 
 
-
+        PhotoView photoView2 = (PhotoView)view.findViewById(R.id.photo_view1);
+        Picasso.with(getContext()).load("https://www.zillowstatic.com/vstatic/64dd1c9/static/logos/Zillowlogo_200x50.gif").fit().into(photoView2);
 
         //Uri myuri = Uri.parse("https://yt3.ggpht.com/-v0soe-ievYE/AAAAAAAAAAI/AAAAAAAAAAA/OixOH_h84Po/s900-c-k-no-mo-rj-c0xffffff/photo.jpg");
 
@@ -91,16 +92,28 @@ public class Tab2fragment extends Fragment {
 
         //making the text clickable
         TextView textView = (TextView)view.findViewById(R.id.google);
-        SpannableString ss = new SpannableString("Hello \nWorld");
+        SpannableString ss = new SpannableString("© Zillow, Inc., 2006-2016. \nGoogle Maps. (2017).");
         ClickableSpan span1 = new ClickableSpan() {
             @Override
             public void onClick(View textView) {
                 // do some thing
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.viralandroid.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.zillow.com/"));
                 startActivity(browserIntent);
             }
         };
-        ss.setSpan(span1, 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(span1, 2, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        ClickableSpan span2 = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                // do some thing
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://developers.google.com/maps/"));
+                startActivity(browserIntent);
+            }
+        };
+        ss.setSpan(span2, 28, 39, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(ss);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -112,6 +125,11 @@ public class Tab2fragment extends Fragment {
         return view ;
     }
 
+    public void openRef(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.zillow.com/"));
+        startActivity(browserIntent);
+
+    }
     public void myF (String s){
       //  t2.setText(s);
     }
