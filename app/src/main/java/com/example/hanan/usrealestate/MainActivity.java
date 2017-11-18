@@ -109,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        SharedPreferences prefs = getSharedPreferences("MyPrefsFile",MODE_PRIVATE);
+        SharedPreferences.Editor prefsEdit = prefs.edit();
+        prefsEdit.remove("21822 68th Ave, Bayside, NY");
+        prefsEdit.commit();
+
        getSupportActionBar().setIcon(R.drawable.ic_action_name);
 
 
@@ -234,12 +239,14 @@ public class MainActivity extends AppCompatActivity {
 
         //********** SCREEN 1 TABLE ************
         final TableLayout table1 = (TableLayout)findViewById(R.id.table1);
+        final HTTPRequestClass httpClass = new HTTPRequestClass();
+
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
+            //TableLayout firstTable = (TableLayout) findViewById(R.id.table1);
 
             final TableRow tr = new TableRow(this);
-            if (counter % 2 != 0)
-                tr.setBackgroundColor(Color.RED);
+            /*if (counter % 2 != 0)
+                tr.setBackgroundColor(Color.RED);*/
             tr.setId(Integer.parseInt(entry.getKey()));
             tr.setBackgroundResource(R.drawable.row_border);
             tr.setWeightSum(1);
@@ -250,8 +257,14 @@ public class MainActivity extends AppCompatActivity {
             property.setTextSize(18);
             property.setText(entry.getKey());
             tr.addView(property);
-            firstTable.addView(tr);
-            counter++;
+            table1.addView(tr);
+            tr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //String[] arr = {sharedPrefs.getString(tr.entry.getKey())}
+                }
+            });
+            //counter++;
 
 
             tr.setOnClickListener(new View.OnClickListener() {
@@ -477,6 +490,8 @@ public class MainActivity extends AppCompatActivity {
                     i1.putExtra("ZPID",ZPID);
                     i1.putExtra("MyPrice",MyPrice);
                     startActivity(i1);
+
+
 
 
 
