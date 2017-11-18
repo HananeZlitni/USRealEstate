@@ -48,7 +48,7 @@ public class Main3Activity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Toolbar toolbar;
     private AppCompatActivity myact;
-    private String ID="norah";
+    private String ID="";
     public static final String PREFS_NAME = "MyPrefsFile";
 
     SharedPreferences sharedpreferences;
@@ -116,6 +116,7 @@ public class Main3Activity extends AppCompatActivity {
 
     public String resultID (){
         String id = getIntent().getStringExtra ("ZPID");
+        ID= id;
         return id;
 
     }
@@ -148,6 +149,7 @@ public class Main3Activity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        int count = 0;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.favorite_2) {
